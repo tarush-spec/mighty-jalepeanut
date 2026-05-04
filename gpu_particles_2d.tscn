@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://ctbauwcmetf57"]
+
+[ext_resource type="Texture2D" uid="uid://bsyjn78dufb3l" path="res://Assets/GraphPoint.png" id="1_2j51h"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_2j51h"]
+
+[node name="GPUParticles2D" type="GPUParticles2D" unique_id=1941670027]
+process_mode = 3
+material = SubResource("CanvasItemMaterial_2j51h")
+amount = 80
+sub_emitter = NodePath(".")
+texture = ExtResource("1_2j51h")
+collision_base_size = 128.0

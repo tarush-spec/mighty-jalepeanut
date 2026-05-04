@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://doimwlkwvruwg"]
+
+[ext_resource type="Texture2D" uid="uid://ddrpgoa7be6d7" path="res://Assets/Enemies/capsipunk.png" id="1_5fg32"]
+[ext_resource type="Script" uid="uid://bdpgc6a7ak85m" path="res://capsipunk_small.gd" id="1_8sseb"]
+[ext_resource type="AudioStream" uid="uid://gyl1mydllpki" path="res://Assets/sound/capsikid_voice.wav" id="3_hlye8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hlye8"]
+atlas = ExtResource("1_5fg32")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_44pym"]
+atlas = ExtResource("1_5fg32")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8sseb"]
+atlas = ExtResource("1_5fg32")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lhdle"]
+atlas = ExtResource("1_5fg32")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ksd1g"]
+atlas = ExtResource("1_5fg32")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lhdle"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hlye8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_44pym")
+}],
+"loop": false,
+"name": &"death",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8sseb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lhdle")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ksd1g")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8sseb"]
+radius = 9.0
+height = 24.0
+
+[node name="caapsipunk small" type="CharacterBody2D" unique_id=695863852 groups=["CRASH", "Enemy", "Small_Enemy"]]
+z_index = 3
+collision_layer = 4
+collision_mask = 7
+script = ExtResource("1_8sseb")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=557099635]
+sprite_frames = SubResource("SpriteFrames_lhdle")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=350657654]
+position = Vector2(-1, 3)
+shape = SubResource("CapsuleShape2D_8sseb")
+debug_color = Color(0.92692, 3.70607e-05, 0.670555, 0.42)
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=526114884]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=714096802]
+stream = ExtResource("3_hlye8")
+volume_db = 10.0

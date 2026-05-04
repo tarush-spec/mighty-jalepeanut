@@ -1,0 +1,82 @@
+[gd_scene format=3 uid="uid://775fab2hl2dq"]
+
+[ext_resource type="Texture2D" uid="uid://d61t6x044fxx" path="res://Assets/bg/3bigcrate_tnt.png" id="1_vcr75"]
+[ext_resource type="Script" uid="uid://b74o18wgpnse0" path="res://crate_tnt.gd" id="1_vvieu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ukkx0"]
+atlas = ExtResource("1_vcr75")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sxk1c"]
+atlas = ExtResource("1_vcr75")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xbni5"]
+atlas = ExtResource("1_vcr75")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_afam0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ukkx0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sxk1c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xbni5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sxk1c"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ukkx0"]
+size = Vector2(28, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vvieu"]
+size = Vector2(183, 127)
+
+[node name="tnt_crate" type="Node2D" unique_id=428884036 groups=["Explodable", "Object"]]
+z_index = 2
+script = ExtResource("1_vvieu")
+recoil = 200
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1733217003]
+sprite_frames = SubResource("SpriteFrames_afam0")
+autoplay = "default"
+frame_progress = 0.27339435
+
+[node name="Area2D" type="Area2D" parent="." unique_id=555333225]
+collision_layer = 2
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=165150612]
+shape = SubResource("RectangleShape2D_sxk1c")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="." unique_id=55002863]
+collision_layer = 2
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D" unique_id=1901672009]
+shape = SubResource("RectangleShape2D_ukkx0")
+debug_color = Color(0.9511681, 2.9841065e-06, 0.5674186, 0.41960785)
+
+[node name="Destruct_Zone" type="Area2D" parent="." unique_id=5371258 groups=["Explodable", "Object"]]
+collision_mask = 7
+monitoring = false
+priority = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Destruct_Zone" unique_id=1759387020]
+position = Vector2(34.5, -23.5)
+shape = SubResource("RectangleShape2D_vvieu")
+debug_color = Color(0.9945826, 0, 0.22713587, 0.41960785)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=649716251]
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="Destruct_Zone" to="." method="_on_destruct_zone_body_entered"]

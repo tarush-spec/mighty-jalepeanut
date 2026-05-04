@@ -1,0 +1,64 @@
+[gd_scene load_steps=10 format=3 uid="uid://cmsrkajox0n80"]
+
+[ext_resource type="Script" uid="uid://da6b6nxotc6jf" path="res://lizapple.gd" id="1_qux7b"]
+[ext_resource type="Texture2D" uid="uid://cdd76ck0e21b0" path="res://Assets/Enemies/dinofruit 64x32.png" id="2_cj2mj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mo1vv"]
+atlas = ExtResource("2_cj2mj")
+region = Rect2(0, 0, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1ct38"]
+atlas = ExtResource("2_cj2mj")
+region = Rect2(64, 0, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q52j0"]
+atlas = ExtResource("2_cj2mj")
+region = Rect2(128, 0, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vw5da"]
+atlas = ExtResource("2_cj2mj")
+region = Rect2(192, 0, 64, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2vgp3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mo1vv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1ct38")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q52j0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vw5da")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cj2mj"]
+size = Vector2(20, 16)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mo1vv"]
+radius = 8.0
+
+[node name="lizapple" type="CharacterBody2D"]
+script = ExtResource("1_qux7b")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_2vgp3")
+autoplay = "default"
+frame_progress = 0.163731
+
+[node name="bodyhitbox" type="CollisionShape2D" parent="."]
+position = Vector2(1, 5)
+shape = SubResource("RectangleShape2D_cj2mj")
+
+[node name="weakpointhitbox" type="CollisionShape2D" parent="."]
+position = Vector2(-19, -2)
+shape = SubResource("CircleShape2D_mo1vv")
+disabled = true
+debug_color = Color(0.933789, 2.31028e-05, 0.643223, 0.42)

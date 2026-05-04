@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://du72dpe7up2ik"]
+
+[ext_resource type="Texture2D" uid="uid://b2tk1q781f3qn" path="res://Assets/bg/TILE.png" id="1_560h3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xbd1u"]
+size = Vector2(63, 15.5)
+
+[node name="tilebridge" type="Node2D" unique_id=870261339]
+z_index = 5
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=451323441]
+texture = ExtResource("1_560h3")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="." unique_id=373119996]
+collision_layer = 7
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D" unique_id=1502414687]
+position = Vector2(0.5000008, -7.25)
+shape = SubResource("RectangleShape2D_xbd1u")
+one_way_collision = true
+one_way_collision_margin = 0.0

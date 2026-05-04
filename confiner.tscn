@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://bkea0k73b8o3v"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ch77i"]
+size = Vector2(70, 364)
+
+[node name="Confiner" type="Node2D" unique_id=981565425]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1936644522]
+collision_layer = 19
+collision_mask = 255
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1657131370]
+position = Vector2(0, 185)
+shape = SubResource("RectangleShape2D_ch77i")
+debug_color = Color(0.7460984, 0.34406275, 0.39784345, 0.41960785)

@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://j10dhqq4uxga"]
+
+[ext_resource type="Texture2D" uid="uid://dqvr355fv4oyh" path="res://Assets/bg/TELEPORTAL SPRITE.png" id="1_gxiat"]
+[ext_resource type="Script" uid="uid://cmf8oopc08rcd" path="res://teleportal.gd" id="1_smou0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_smou0"]
+size = Vector2(31, 65)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_svb03"]
+atlas = ExtResource("1_gxiat")
+region = Rect2(0, 0, 32, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6iefw"]
+atlas = ExtResource("1_gxiat")
+region = Rect2(32, 0, 32, 96)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_arhk1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_svb03")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6iefw")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[node name="Teleportal" type="Area2D" unique_id=1031171678]
+z_index = 5
+collision_mask = 7
+script = ExtResource("1_smou0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2030891115]
+position = Vector2(-0.5, 15.5)
+shape = SubResource("RectangleShape2D_smou0")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2094683589]
+sprite_frames = SubResource("SpriteFrames_arhk1")
+autoplay = "default"
+frame_progress = 0.59477496
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

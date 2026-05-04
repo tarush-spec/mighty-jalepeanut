@@ -1,0 +1,20 @@
+GIMP Palette
+#Palette Name: Colorboy
+#Description: A Gameboy Color inspired palette designed for linear ramps of 4 colors that include black and white. There are 8 base colors and 6 shadow colors, many of which can be mixed to create subtle variations for each base color. Not really designed for larger mixed ramps.
+#Colors: 16
+242	255	232	f2ffe8
+194	191	200	c2bfc8
+168	211	225	a8d3e1
+172	206	113	acce71
+238	202	111	eeca6f
+239	158	109	ef9e6d
+222	169	153	dea999
+238	148	137	ee9489
+222	169	210	dea9d2
+131	117	139	83758b
+111	139	230	6f8be6
+73	143	148	498f94
+140	106	97	8c6a61
+152	96	117	986075
+119	103	166	7767a6
+50	47	61	322f3d

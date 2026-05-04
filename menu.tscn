@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://b1h6rkn3nrk4"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_vsb4k"]
+
+[node name="menu" type="Control" unique_id=529992937]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button" type="Button" parent="." unique_id=811957212]
+layout_mode = 0
+offset_left = 164.0
+offset_top = 65.0
+offset_right = 458.0
+offset_bottom = 157.0
+text = "RETRY"
+icon = SubResource("ImageTexture_vsb4k")

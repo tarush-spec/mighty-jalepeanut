@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://chxsmwdyg2cgj"]
+
+[ext_resource type="Texture2D" uid="uid://e5ihwhmrnldu" path="res://Assets/bg/fountain1.png" id="1_dmekx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gb8ac"]
+size = Vector2(57, 21)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dmekx"]
+atlas = ExtResource("1_dmekx")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gb8ac"]
+atlas = ExtResource("1_dmekx")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_me227"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dmekx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gb8ac")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[node name="fountain" type="Node2D" unique_id=1040370310]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1600562723]
+collision_layer = 8
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1263383258]
+position = Vector2(-8.5, -6.5)
+shape = SubResource("RectangleShape2D_gb8ac")
+debug_color = Color(4.33177e-07, 0.642492, 0.31681, 0.42)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1877824488]
+sprite_frames = SubResource("SpriteFrames_me227")
+autoplay = "default"
+frame_progress = 0.46924105

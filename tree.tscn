@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://drbjrkjoqpmbo"]
+
+[ext_resource type="Texture2D" uid="uid://cootf8fyjtbyi" path="res://Assets/bg/Tree.png" id="1_brfkd"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nnvrw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_brfkd")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_brfkd"]
+size = Vector2(21, 84)
+
+[node name="tree" type="Node2D" unique_id=528609813 groups=["Tall_Object"]]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=35187379]
+sprite_frames = SubResource("SpriteFrames_nnvrw")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1963633611]
+collision_layer = 8
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=127392230]
+position = Vector2(11.5, 19)
+shape = SubResource("RectangleShape2D_brfkd")
+debug_color = Color(0.919127, 6.56503e-05, 0.699643, 0.42)

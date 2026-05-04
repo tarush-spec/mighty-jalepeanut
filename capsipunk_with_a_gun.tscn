@@ -1,0 +1,88 @@
+[gd_scene format=3 uid="uid://8fsplp3180v7"]
+
+[ext_resource type="PackedScene" uid="uid://ckhvprldb1f6o" path="res://gun.tscn" id="1_ctd2i"]
+[ext_resource type="Script" uid="uid://bq5ma5pe3phb3" path="res://capsipunk_with_a_GUN.gd" id="1_nc4n0"]
+[ext_resource type="Texture2D" uid="uid://b1ldblx2q82c2" path="res://Assets/Enemies/capsipunk with spike.png" id="2_k2aed"]
+[ext_resource type="AudioStream" uid="uid://gyl1mydllpki" path="res://Assets/sound/capsikid_voice.wav" id="4_dr31d"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g3oh2"]
+atlas = ExtResource("2_k2aed")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mmoie"]
+atlas = ExtResource("2_k2aed")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wjtgs"]
+atlas = ExtResource("2_k2aed")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nc4n0"]
+atlas = ExtResource("2_k2aed")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dr31d"]
+atlas = ExtResource("2_k2aed")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ai2d2"]
+atlas = ExtResource("2_k2aed")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g3oh2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g3oh2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mmoie")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wjtgs")
+}],
+"loop": true,
+"name": &"death",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nc4n0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dr31d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ai2d2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mmoie"]
+size = Vector2(27, 23)
+
+[node name="Capsipunk_with_a_GUN" type="CharacterBody2D" unique_id=984830157 groups=["Enemy"]]
+z_index = 5
+collision_layer = 4
+collision_mask = 7
+script = ExtResource("1_nc4n0")
+
+[node name="Gun" parent="." unique_id=264389567 instance=ExtResource("1_ctd2i")]
+position = Vector2(-19, -2)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1452794634]
+position = Vector2(1, 0)
+sprite_frames = SubResource("SpriteFrames_g3oh2")
+autoplay = "default"
+frame_progress = 0.18389831
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1725575516]
+position = Vector2(-6, 2.5)
+shape = SubResource("RectangleShape2D_mmoie")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=179837763]
+stream = ExtResource("4_dr31d")
+volume_db = 10.0
+pitch_scale = 0.5

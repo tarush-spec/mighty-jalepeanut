@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://bmlmim8n56qtn"]
+
+[ext_resource type="Texture2D" uid="uid://b0d7vfvj3240j" path="res://Assets/bg/controls.png" id="1_gpdjo"]
+[ext_resource type="Script" uid="uid://bjoji85maytjh" path="res://controls.gd" id="1_xwvqn"]
+[ext_resource type="Texture2D" uid="uid://dfao6lif5bryg" path="res://Assets/bg/titlescreen_icon3.png" id="2_qo8cm"]
+[ext_resource type="FontFile" uid="uid://co0p56qnn2d5u" path="res://Assets/fonts/Pixeboy.ttf" id="4_ff64o"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_kxvun"]
+font = ExtResource("4_ff64o")
+font_size = 25
+
+[node name="Controls" type="Control" unique_id=103576655]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xwvqn")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1726030089]
+layout_mode = 0
+offset_top = 18.0
+offset_right = 642.6667
+offset_bottom = 259.0
+texture = ExtResource("1_gpdjo")
+expand_mode = 1
+
+[node name="return" type="TextureButton" parent="." unique_id=1185605494]
+layout_mode = 0
+offset_left = 231.0
+offset_top = 240.0
+offset_right = 743.0
+offset_bottom = 752.0
+scale = Vector2(0.32000116, 0.32000116)
+texture_normal = ExtResource("2_qo8cm")
+texture_pressed = ExtResource("2_qo8cm")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="." unique_id=513330482]
+layout_mode = 0
+offset_left = 389.0
+offset_top = 274.0
+offset_right = 624.0
+offset_bottom = 297.0
+text = "graphics is my pashawn"
+label_settings = SubResource("LabelSettings_kxvun")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="." unique_id=2083841310]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 274.0
+offset_right = 251.0
+offset_bottom = 297.0
+text = "esc -> title screen"
+label_settings = SubResource("LabelSettings_kxvun")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="return" to="." method="_on_return_pressed"]

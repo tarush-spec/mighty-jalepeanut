@@ -1,0 +1,108 @@
+[gd_scene format=3 uid="uid://dmq4x8yjrweh2"]
+
+[ext_resource type="Script" uid="uid://cm38fmk03tsxq" path="res://big_capsipunk.gd" id="1_2kegl"]
+[ext_resource type="Texture2D" uid="uid://buovcv4nx1su2" path="res://Assets/Enemies/big capsipunk.png" id="1_8d2xq"]
+[ext_resource type="AudioStream" uid="uid://bpwwf36hdwc2w" path="res://Assets/sound/big capsikid.wav" id="3_nidn2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2kegl"]
+atlas = ExtResource("1_8d2xq")
+region = Rect2(0, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nidn2"]
+atlas = ExtResource("1_8d2xq")
+region = Rect2(96, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dr18j"]
+atlas = ExtResource("1_8d2xq")
+region = Rect2(192, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qywc5"]
+atlas = ExtResource("1_8d2xq")
+region = Rect2(288, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xji1g"]
+atlas = ExtResource("1_8d2xq")
+region = Rect2(384, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oj8n4"]
+atlas = ExtResource("1_8d2xq")
+region = Rect2(480, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_luv4i"]
+atlas = ExtResource("1_8d2xq")
+region = Rect2(576, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_la3r3"]
+atlas = ExtResource("1_8d2xq")
+region = Rect2(672, 0, 96, 96)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_536nn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2kegl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nidn2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dr18j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qywc5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xji1g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oj8n4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_luv4i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_la3r3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8d2xq"]
+radius = 15.0
+height = 58.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2kegl"]
+size = Vector2(53, 73)
+
+[node name="Big_Capsipunk" type="CharacterBody2D" unique_id=2001925376 groups=["Big_Enemy", "CRASH", "Enemy"]]
+z_index = 4
+collision_layer = 4
+collision_mask = 7
+script = ExtResource("1_2kegl")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=431314939]
+sprite_frames = SubResource("SpriteFrames_536nn")
+autoplay = "default"
+frame_progress = 0.39497977
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1753296056]
+position = Vector2(0, 8)
+shape = SubResource("CapsuleShape2D_8d2xq")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1881683027]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1334011472]
+position = Vector2(-2.5, 8.5)
+shape = SubResource("RectangleShape2D_2kegl")
+debug_color = Color(0.9465628, 5.679429e-06, 0.58952516, 0.41960785)
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=1978550030]
+rect = Rect2(-29, -27, 53, 70)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=845250971]
+stream = ExtResource("3_nidn2")
+volume_db = 18.0
+autoplay = true
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

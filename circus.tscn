@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://c4041qo08ivv3"]
+
+[ext_resource type="PackedScene" uid="uid://j10dhqq4uxga" path="res://teleportal.tscn" id="1_w2qtb"]
+[ext_resource type="Texture2D" uid="uid://d3hgsn5wtt7ox" path="res://Assets/bg/Clowndiment Circus.png" id="2_umv0j"]
+[ext_resource type="PackedScene" uid="uid://ch7mpiqcr5js5" path="res://endflag.tscn" id="3_umv0j"]
+[ext_resource type="PackedScene" uid="uid://dk27qbiabs887" path="res://boss.tscn" id="4_1ugis"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1ugis"]
+atlas = ExtResource("2_umv0j")
+region = Rect2(0, 0, 256, 224)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ywukl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1ugis")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Circus" type="Node2D" unique_id=1378823772]
+
+[node name="Teleportal" parent="." unique_id=1031171678 instance=ExtResource("1_w2qtb")]
+visible = false
+position = Vector2(0, 62)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1964683736]
+sprite_frames = SubResource("SpriteFrames_ywukl")
+
+[node name="endflag" parent="." unique_id=675365788 instance=ExtResource("3_umv0j")]
+position = Vector2(-1, 73)
+collision_mask = 7
+next_scene = ExtResource("4_1ugis")

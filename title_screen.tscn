@@ -1,0 +1,97 @@
+[gd_scene format=3 uid="uid://bfsboepulan45"]
+
+[ext_resource type="Script" uid="uid://bhqros0twycux" path="res://title_screen.gd" id="1_ig5kc"]
+[ext_resource type="FontFile" uid="uid://co0p56qnn2d5u" path="res://Assets/fonts/Pixeboy.ttf" id="1_v6p8y"]
+[ext_resource type="Texture2D" uid="uid://bana27nuionkb" path="res://Assets/promostuff/titlescreen1.PNG" id="2_hafda"]
+[ext_resource type="Texture2D" uid="uid://c7sueklroe4ya" path="res://Assets/promostuff/titlescreen2.PNG" id="5_tpml5"]
+[ext_resource type="Texture2D" uid="uid://bd3wsrcbj0rdd" path="res://Assets/promostuff/Cover art.png" id="6_tpml5"]
+[ext_resource type="Texture2D" uid="uid://dpc36w1me7dwi" path="res://Assets/promostuff/IMG_0948.PNG" id="7_jqemp"]
+[ext_resource type="Texture2D" uid="uid://dp4k6imqqojvt" path="res://Assets/bg/titlescreen_icon2.png" id="8_8vmu4"]
+[ext_resource type="Texture2D" uid="uid://b2l3mdtbg81rm" path="res://Assets/bg/titlescreen_icon1.png" id="8_013yr"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ak2if"]
+font = ExtResource("1_v6p8y")
+font_size = 18
+font_color = Color(1, 0, 0, 1)
+shadow_size = 3
+shadow_color = Color(0, 0.35686275, 0, 1)
+
+[node name="Title Screen" type="Control" unique_id=757554438]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ig5kc")
+
+[node name="jalepeanut" type="TextureRect" parent="." unique_id=248962011]
+layout_mode = 0
+offset_left = -73.0
+offset_top = 62.0
+offset_right = 318.0605
+offset_bottom = 393.0
+texture = ExtResource("2_hafda")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="." unique_id=2097918482]
+layout_mode = 0
+offset_left = 163.0
+offset_top = 170.0
+offset_right = 531.0
+offset_bottom = 194.0
+text = "
+ v.0.0.2"
+label_settings = SubResource("LabelSettings_ak2if")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="carolina" type="TextureRect" parent="." unique_id=2061945482]
+layout_mode = 0
+offset_left = 299.0
+offset_top = 32.0
+offset_right = 685.3347
+offset_bottom = 359.0
+texture = ExtResource("5_tpml5")
+expand_mode = 1
+
+[node name="TextureRect2" type="TextureRect" parent="." unique_id=1765438902]
+layout_mode = 0
+offset_left = 165.0
+offset_top = -7.0
+offset_right = 483.19415
+offset_bottom = 218.0
+texture = ExtResource("6_tpml5")
+expand_mode = 1
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1755053920]
+z_index = -5
+layout_mode = 0
+offset_right = 640.0
+offset_bottom = 361.0
+texture = ExtResource("7_jqemp")
+expand_mode = 1
+
+[node name="Start" type="TextureButton" parent="." unique_id=1850655655]
+layout_mode = 0
+offset_left = 246.0
+offset_top = 228.0
+offset_right = 758.0
+offset_bottom = 740.0
+scale = Vector2(0.1999977, 0.1999977)
+texture_normal = ExtResource("8_013yr")
+texture_pressed = ExtResource("8_013yr")
+texture_hover = ExtResource("8_013yr")
+stretch_mode = 0
+
+[node name="Controls" type="TextureButton" parent="." unique_id=174528441]
+layout_mode = 0
+offset_left = 345.0
+offset_top = 229.00002
+offset_right = 857.0
+offset_bottom = 741.0
+scale = Vector2(0.20000017, 0.20000017)
+texture_normal = ExtResource("8_8vmu4")
+
+[connection signal="pressed" from="Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="Controls" to="." method="_on_controls_pressed"]

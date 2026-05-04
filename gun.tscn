@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://ckhvprldb1f6o"]
+
+[ext_resource type="Script" uid="uid://dejoblkm2arw5" path="res://gun.gd" id="1_dk5gl"]
+[ext_resource type="PackedScene" uid="uid://gvsxtv1r2uut" path="res://bullet.tscn" id="2_8iju2"]
+[ext_resource type="Texture2D" uid="uid://cb6lmm2x71w3n" path="res://Assets/Enemies/gun.png" id="2_kw0bs"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8iju2"]
+atlas = ExtResource("2_kw0bs")
+region = Rect2(0, 0, 64, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7vd5q"]
+atlas = ExtResource("2_kw0bs")
+region = Rect2(64, 0, 64, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pr6yj"]
+atlas = ExtResource("2_kw0bs")
+region = Rect2(128, 0, 64, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k8v55"]
+atlas = ExtResource("2_kw0bs")
+region = Rect2(192, 0, 64, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5k1dv"]
+atlas = ExtResource("2_kw0bs")
+region = Rect2(256, 0, 64, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1q2t8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8iju2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7vd5q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pr6yj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k8v55")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5k1dv")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
+[node name="Gun" type="Node2D" unique_id=264389567]
+script = ExtResource("1_dk5gl")
+bullet_scene = ExtResource("2_8iju2")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=420916328]
+sprite_frames = SubResource("SpriteFrames_1q2t8")
+frame_progress = 0.38855886
+
+[node name="muzzle_pos" type="Marker2D" parent="." unique_id=798294011]
+gizmo_extents = 0.0

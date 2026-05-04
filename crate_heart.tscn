@@ -1,0 +1,72 @@
+[gd_scene format=3 uid="uid://c05lon5oseb78"]
+
+[ext_resource type="Script" uid="uid://ckckvn88alymq" path="res://crate_heart.tscn.gd" id="1_d30hd"]
+[ext_resource type="Texture2D" uid="uid://tugre3hn6og2" path="res://Assets/bg/2bigcrate_heart.png" id="1_rvny6"]
+[ext_resource type="AudioStream" uid="uid://bx3ss4hwfs6ag" path="res://Assets/sound/Crate Smash.wav" id="3_ibanl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d30hd"]
+size = Vector2(28, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d30hd"]
+atlas = ExtResource("1_rvny6")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ibanl"]
+atlas = ExtResource("1_rvny6")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r32vq"]
+atlas = ExtResource("1_rvny6")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_r32vq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d30hd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ibanl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r32vq")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_782mg"]
+size = Vector2(32, 32)
+
+[node name="Crate_Heart" type="Node2D" unique_id=1213735055 groups=["Explodable", "Object"]]
+z_index = 2
+script = ExtResource("1_d30hd")
+hp_player = 2
+
+[node name="RigidBody2D" type="RigidBody2D" parent="." unique_id=1188287211]
+collision_layer = 2
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D" unique_id=1256314667]
+z_index = 1
+shape = SubResource("RectangleShape2D_d30hd")
+debug_color = Color(0.93867224, 1.2417734e-05, 0.6248308, 0.41960785)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=373507576]
+sprite_frames = SubResource("SpriteFrames_r32vq")
+autoplay = "default"
+frame_progress = 0.7987722
+
+[node name="Area2D" type="Area2D" parent="." unique_id=930325025 groups=["Object"]]
+collision_layer = 2
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1538028891]
+shape = SubResource("RectangleShape2D_782mg")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1069271645]
+stream = ExtResource("3_ibanl")
+volume_db = 20.0
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

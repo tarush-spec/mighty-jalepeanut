@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://dabh36geqjqya"]
+
+[ext_resource type="Texture2D" uid="uid://2y1b2nvi0sc7" path="res://Assets/bg/House.png" id="1_xugpe"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lbusf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_xugpe")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xde4p"]
+size = Vector2(341, 160)
+
+[node name="house prop" type="Node2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_lbusf")
+autoplay = "default"
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(6.5, 63)
+shape = SubResource("RectangleShape2D_xde4p")
+debug_color = Color(1.92523e-07, 0.757879, 0.463861, 0.42)

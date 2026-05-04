@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://cvdn8b8nr6tpe"]
+
+[ext_resource type="Texture2D" uid="uid://18bxs7o3a7gi" path="res://Assets/Collectibles/Drumstick Spriteart.png" id="1_ofpsq"]
+[ext_resource type="Script" uid="uid://bumn6b7ojqrwg" path="res://chicken.gd" id="1_yoslt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yoslt"]
+atlas = ExtResource("1_ofpsq")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o2niq"]
+atlas = ExtResource("1_ofpsq")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yi1sm"]
+atlas = ExtResource("1_ofpsq")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_k0cju"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yoslt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o2niq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yi1sm")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ofpsq"]
+radius = 5.60951
+height = 28.2836
+
+[node name="Drumstick" type="Area2D" unique_id=435968186]
+z_index = 2
+collision_mask = 2
+script = ExtResource("1_yoslt")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=850504439]
+sprite_frames = SubResource("SpriteFrames_k0cju")
+autoplay = "default"
+frame_progress = 0.317549
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=675192924]
+position = Vector2(0, -1)
+rotation = 0.792466
+shape = SubResource("CapsuleShape2D_ofpsq")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=401131584]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

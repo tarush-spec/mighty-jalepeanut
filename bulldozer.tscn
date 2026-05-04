@@ -1,0 +1,79 @@
+[gd_scene format=3 uid="uid://q43210xrpwia"]
+
+[ext_resource type="Script" uid="uid://bn4vmtblj5vfu" path="res://bulldozer.gd" id="1_6trfd"]
+[ext_resource type="Texture2D" uid="uid://ul71k7bkx44j" path="res://Assets/Enemies/pinapool tractor.png" id="1_plydi"]
+[ext_resource type="AudioStream" uid="uid://bowxvnktr1866" path="res://Assets/sound/engine start.wav" id="3_s846b"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6trfd"]
+atlas = ExtResource("1_plydi")
+region = Rect2(0, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s846b"]
+atlas = ExtResource("1_plydi")
+region = Rect2(256, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_plydi"]
+atlas = ExtResource("1_plydi")
+region = Rect2(0, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fmxss"]
+atlas = ExtResource("1_plydi")
+region = Rect2(256, 256, 256, 256)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6s06k"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6trfd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s846b")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_plydi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fmxss")
+}],
+"loop": true,
+"name": &"uh oh",
+"speed": 12.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6trfd"]
+radius = 78.0
+height = 156.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6trfd"]
+size = Vector2(258, 165)
+
+[node name="bulldozer" type="CharacterBody2D" unique_id=304395471 groups=["Big_Enemy", "CRASH", "Enemy"]]
+collision_layer = 4
+collision_mask = 7
+script = ExtResource("1_6trfd")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=686068438]
+sprite_frames = SubResource("SpriteFrames_6s06k")
+animation = &"uh oh"
+autoplay = "default"
+frame_progress = 0.2628127
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1737462564]
+position = Vector2(-8, 45)
+shape = SubResource("CapsuleShape2D_6trfd")
+
+[node name="red button" type="Area2D" parent="." unique_id=1588626396]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="red button" unique_id=145800054]
+position = Vector2(20, 40.5)
+shape = SubResource("RectangleShape2D_6trfd")
+debug_color = Color(1, 0, 0.050980393, 0.41960785)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1123087718]
+stream = ExtResource("3_s846b")
+volume_db = 24.0

@@ -1,0 +1,83 @@
+[gd_scene load_steps=8 format=3 uid="uid://djyu8sb7njryx"]
+
+[ext_resource type="Texture2D" uid="uid://b77ob763fknal" path="res://Assets/bg/capsicum houses.png" id="1_metfq"]
+[ext_resource type="Texture2D" uid="uid://pra407j4qkrs" path="res://Assets/bg/house wall.png" id="2_6syyc"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_o1325"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_metfq")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="GDScript" id="GDScript_metfq"]
+script/source = "extends Node2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	if knockback_velocity.length() > 10:
+		get_parent().queue_free()
+	else:
+		pass
+var knockback_velocity = Vector2.ZERO
+
+func apply_knockback(force: Vector2):
+	knockback_velocity = force
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vy7fe"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_6syyc")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_10qhy"]
+size = Vector2(16, 31)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2y50f"]
+size = Vector2(15, 30)
+
+[node name="house" type="Node2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_o1325")
+
+[node name="walls" type="Node2D" parent="."]
+script = SubResource("GDScript_metfq")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="walls"]
+position = Vector2(-32, 16)
+sprite_frames = SubResource("SpriteFrames_vy7fe")
+
+[node name="Area2D" type="Area2D" parent="walls"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="walls/Area2D"]
+position = Vector2(-31, 15.5)
+shape = SubResource("RectangleShape2D_10qhy")
+
+[node name="walls2" type="Node2D" parent="."]
+script = SubResource("GDScript_metfq")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="walls2"]
+position = Vector2(31, 16)
+sprite_frames = SubResource("SpriteFrames_vy7fe")
+
+[node name="Area2D" type="Area2D" parent="walls2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="walls2/Area2D"]
+position = Vector2(31.5, 16)
+shape = SubResource("RectangleShape2D_2y50f")

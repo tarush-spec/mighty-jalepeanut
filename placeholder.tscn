@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://bcf53d1eu1jv5"]
+
+[ext_resource type="Texture2D" uid="uid://bc6xl3bewow0k" path="res://Assets/deathplaceholder.png" id="1_a3njk"]
+[ext_resource type="PackedScene" uid="uid://cm1b01qirwv56" path="res://Death.tscn" id="2_c3teg"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_c3teg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_a3njk")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_820nf"]
+radius = 9.0
+
+[node name="Node2D" type="Node2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_c3teg")
+
+[node name="ded" parent="." instance=ExtResource("2_c3teg")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ded"]
+shape = SubResource("CircleShape2D_820nf")

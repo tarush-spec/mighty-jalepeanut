@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://xlushfhloiec"]
+
+[ext_resource type="Script" uid="uid://dy4oud3pwdl2t" path="res://parth.gd" id="1_m3yo5"]
+[ext_resource type="Texture2D" uid="uid://cmbtu0r32ubkv" path="res://Assets/Collectibles/Paarth Prakash Coin.png" id="1_rekm1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m3yo5"]
+atlas = ExtResource("1_rekm1")
+region = Rect2(0, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_seqr7"]
+atlas = ExtResource("1_rekm1")
+region = Rect2(96, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yvxsq"]
+atlas = ExtResource("1_rekm1")
+region = Rect2(192, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4hryl"]
+atlas = ExtResource("1_rekm1")
+region = Rect2(288, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_epqnr"]
+atlas = ExtResource("1_rekm1")
+region = Rect2(384, 0, 96, 96)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rlcj5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m3yo5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_seqr7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yvxsq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4hryl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_epqnr")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_seqr7"]
+radius = 46.010868
+
+[node name="parth" type="Node2D" unique_id=1225809001]
+z_index = 3
+script = ExtResource("1_m3yo5")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1482081744]
+sprite_frames = SubResource("SpriteFrames_rlcj5")
+autoplay = "default"
+frame_progress = 0.25201237
+
+[node name="Area2D" type="Area2D" parent="." unique_id=235748149]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1282216322]
+z_index = 3
+position = Vector2(0, -1)
+shape = SubResource("CircleShape2D_seqr7")
+debug_color = Color(0.04182636, 0.65069807, 1.92523e-07, 0.41960785)
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

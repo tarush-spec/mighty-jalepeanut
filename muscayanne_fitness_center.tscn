@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://16me4m3kyekk"]
+
+[ext_resource type="Texture2D" uid="uid://dy6usy6f5l3cp" path="res://Assets/bg/capsicum house3.png" id="1_wx1jg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6juda"]
+atlas = ExtResource("1_wx1jg")
+region = Rect2(0, 0, 224, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_66cfq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6juda")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wx1jg"]
+size = Vector2(92, 110)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6juda"]
+size = Vector2(32, 51)
+
+[node name="Muscayanne Fitness Center" type="Node2D" unique_id=1389540872]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1688811085]
+sprite_frames = SubResource("SpriteFrames_66cfq")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="." unique_id=1830961302]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D" unique_id=1470129989]
+position = Vector2(0, 9)
+shape = SubResource("RectangleShape2D_wx1jg")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1567984730]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1527718261]
+position = Vector2(0, 38.5)
+shape = SubResource("RectangleShape2D_6juda")
+debug_color = Color(0.95088524, 8.663535e-07, 0.56881344, 0.41960785)

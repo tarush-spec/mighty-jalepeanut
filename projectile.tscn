@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://c3end8tdietd7"]
+
+[ext_resource type="Script" uid="uid://dbx8r48efhjq0" path="res://projectile.gd" id="1_qxf0c"]
+[ext_resource type="Texture2D" uid="uid://0wx8vtiq2ih3" path="res://Assets/Enemies/bullet.png" id="2_dgwo2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_87kke"]
+atlas = ExtResource("2_dgwo2")
+region = Rect2(0, 0, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2kqbe"]
+atlas = ExtResource("2_dgwo2")
+region = Rect2(64, 0, 64, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tqovo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_87kke")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2kqbe")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uealu"]
+size = Vector2(28.750006, 21.25)
+
+[node name="projectile" type="Area2D" unique_id=700002625 groups=["Enemy"]]
+collision_layer = 4
+collision_mask = 7
+script = ExtResource("1_qxf0c")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1333645055]
+sprite_frames = SubResource("SpriteFrames_tqovo")
+autoplay = "default"
+frame_progress = 0.23510404
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=935466288]
+position = Vector2(-3.1249995, 0.6250002)
+scale = Vector2(0.9999997, 0.9999997)
+shape = SubResource("RectangleShape2D_uealu")
+debug_color = Color(0.5132995, 0.0013912675, 0.6930068, 0.41960785)
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
