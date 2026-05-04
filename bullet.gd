@@ -17,7 +17,7 @@ func _physics_process(delta):
 
 func _on_body_entered(body):
 	if body.is_in_group("Player") or body.is_in_group("Enemy"):
-		if body.is_dashing:
+		if body.get("is_dashing"):
 			direction = direction * -1
 			lifetime = 10.0
 		else:

@@ -425,8 +425,6 @@ debug_color = Color(0.896696, 0.000197529, 0.774304, 0.42)
 position = Vector2(0, -13.545)
 offset = Vector2(101.985, -93.355)
 script = ExtResource("3_kne1u")
-shake_decay = 10
-intensity = 10
 
 [node name="feetarea" type="Area2D" parent="." unique_id=1993706108]
 

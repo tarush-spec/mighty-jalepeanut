@@ -37,13 +37,16 @@ var dash_hitpause_timer: float = 0
 var is_ouch: bool = false
 @export var ouch_animtime: float = 0.8
 var is_ded: bool = false
+var is_invincible: bool = false
+var _iframes_ouch: bool = false
+@export var invincibility_time: float = 1.2
 
 #registering movement input
 var move_input: float
 
 #sounds
 var take_damage_sfx = preload("res://Assets/sound/Jalepeanut_ouch.wav")
-var dash_sfx = preload("res://Assets/sound/Jalepeanut_damage.wav")
+var dash_sfx = preload("res://Assets/sound/Jalepeanut_damage.wav") # TODO: verify this is the correct audio file for dashing
 var coin_sfx = preload("res://Assets/sound/coin.wav")
 var jump_sfx = preload("res://Assets/sound/Jalepeanut_Jump.wav")
 var ded_sfx = preload("res://Assets/sound/Jalepeanut_Death.wav")
@@ -103,14 +106,14 @@ func _process_walk(delta):
 		
 	
 	# jumping towards -y axis, falling towards +y axis
-	if Input.is_action_pressed("Jump") and is_on_floor():
+	if Input.is_action_just_pressed("Jump") and is_on_floor():
 		play_sound(jump_sfx)
 		velocity.y = -jumpstrength
 
 # Dash Process
 func _process_dash(delta):
 	velocity.x = dash * dash_direction 
-	velocity.y = 0 * delta
+	velocity.y = 0.0
 	if Input.is_action_pressed("Jump"):
 		velocity.y = -jumpstrength
 	
@@ -124,8 +127,9 @@ func _update_timers(delta):
 			end_dash()
 	if dash_cooldown_timer > 0:
 		dash_cooldown_timer -= delta
-	if dash_hitpause_timer > 0:
-		dash_hitpause_timer -= delta
+	# dash_hitpause_timer is reserved for a future hitpause feature
+	#if dash_hitpause_timer > 0:
+	#	dash_hitpause_timer -= delta
 
 # check if dashing is possible
 func can_dash():
@@ -136,25 +140,30 @@ func begin_dash():
 	is_dashing = true
 	play_sound(dash_sfx)
 	dash_timer = dash_duration
-	dash_cooldown = dash_cooldown_timer
-	
+	dash_cooldown_timer = dash_cooldown
+
+	# pass through destroyable objects and enemies (layer 2) while dashing
+	# damage is still handled by the charge Area2D, so detection is unaffected
+	collision_mask &= ~2
+
 	# direction of the dash is towards where the player stands
 	if move_input != 0:
 		dash_direction = sign(move_input)
 	else:
 		dash_direction = 1 if not animsprite.flip_h else -1
-	
+
 	# hitbox enabling
 	charge.monitoring = true
-	
+
 	# play animation
 	animsprite.play("slapdash")
-	
+
 
 # end the action
 func end_dash():
 	is_dashing = false
 	charge.monitoring = false
+	collision_mask |= 2  # restore layer 2 collision after dash
 
 # collecting jumpsticks
 
@@ -178,7 +187,7 @@ func _process(delta):
 	_manage_animation()
 
 func _manage_animation():
-	if is_ouch:
+	if is_ouch or _iframes_ouch:
 		animsprite.play("ouch")
 	else:
 		if is_dashing:
@@ -194,24 +203,57 @@ func _manage_animation():
 
 # taking damage
 func take_damage(amount: int):
+	if is_ded or is_invincible:
+		return
 	hp -= amount
-	
+
 	onHealthChange.emit(hp)
-	damage_flash() # start ouch animation
+	damage_flash()
 	play_sound(take_damage_sfx)
-	# emit screenshaking for getting hit
 	onDamageDealt.emit()
-	
+
 	var knockback_strength = 5.0
-	velocity.x = -sign(velocity.x) * knockback_strength * walk_speed
+	var knockback_dir = sign(velocity.x) if velocity.x != 0 else 1.0
+	velocity.x = -knockback_dir * knockback_strength * walk_speed
+
 	if hp <= 0:
 		call_deferred("game_over")
+	else:
+		_start_invincibility()
 
-# damage animations
+
+# damage flash animation
 func damage_flash():
 	is_ouch = true
 	await get_tree().create_timer(ouch_animtime).timeout
 	is_ouch = false
+
+
+# i-frames: blocks damage and strips enemy collision for invincibility_time seconds
+func _start_invincibility():
+	is_invincible = true
+	_iframes_ouch = true
+	var mask_before := collision_mask
+	var layer_before := collision_layer
+	collision_layer = 0
+	collision_mask &= ~(2 | 4)
+
+	# flicker the sprite so the player can see they're protected
+	var flicker := create_tween()
+	var flicker_count := int(invincibility_time / 0.12)
+	for i in flicker_count:
+		flicker.tween_property(animsprite, "modulate:a", 0.15, 0.06)
+		flicker.tween_property(animsprite, "modulate:a", 1.0, 0.06)
+	flicker.tween_property(animsprite, "modulate:a", 1.0, 0.0)
+
+	await get_tree().create_timer(invincibility_time * 0.5).timeout
+	_iframes_ouch = false  # ouch animation ends at halfway, normal anims resume
+
+	await get_tree().create_timer(invincibility_time * 0.5).timeout
+	is_invincible = false
+	collision_layer = layer_before
+	collision_mask = mask_before
+	animsprite.modulate.a = 1.0
 
 # restoring health
 func restore_health(hp_regain: int):

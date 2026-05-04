@@ -26,6 +26,14 @@ var music_bulldoze: AudioStream = preload("res://Assets/sound/incoming!!.wav")
 
 
 
+func _ready():
+	# red button defaults to collision_mask = 1 (floor only), which misses enemies on layer 4
+	# expand it to cover all relevant layers so enemies are detected on body_entered
+	red_button.collision_mask = 7
+	# the signal was never wired up in the scene file, so connect it here
+	red_button.body_entered.connect(_on_red_button_body_entered)
+
+
 # for sound purposes
 func play_sound(sound:AudioStream):
 	audio.stream = sound

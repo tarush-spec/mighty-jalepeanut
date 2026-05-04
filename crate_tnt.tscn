@@ -79,4 +79,3 @@ debug_color = Color(0.9945826, 0, 0.22713587, 0.41960785)
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=649716251]
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
-[connection signal="body_entered" from="Destruct_Zone" to="." method="_on_destruct_zone_body_entered"]
