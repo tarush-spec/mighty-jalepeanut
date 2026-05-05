@@ -13,7 +13,6 @@ var is_exploding: bool = false
 @onready var animsprite: AnimatedSprite2D = $AnimatedSprite2D
 
 # Counting Scores
-@onready var game_manager: Node = %GameManager
 @export var score_value: int = 100
 
 # signals
@@ -31,7 +30,7 @@ func destroyed():
 	if _is_dying:
 		return
 	_is_dying = true
-	game_manager.add_point(score_value)
+	GameManager.add_point(score_value)
 	# disable ALL collision objects so nothing physically blocks during animation
 	for child in get_children():
 		if child is CollisionObject2D:
@@ -84,7 +83,7 @@ func _physics_process(_delta):
 				_hit_this_interaction = true
 				if body.has_method("crash_despawn"):
 					body.crash_despawn(recoil)
-				game_manager.add_point(score_value / 2)
+				GameManager.add_point(score_value / 2)
 				take_damage(body.damage)
 	if not any_active:
 		_hit_this_interaction = false
@@ -104,7 +103,7 @@ func _on_area_2d_body_entered(body):
 		if body.has_method("crash_despawn") and body.is_crashing:
 			_hit_this_interaction = true
 			body.crash_despawn(recoil)
-			game_manager.add_point(score_value / 2)
+			GameManager.add_point(score_value / 2)
 			take_damage(body.damage)
 
 
@@ -143,6 +142,9 @@ func _get_explosion_radius() -> float:
 
 
 func take_damage(damage_dealt: int):
+	# already exploding or dying — ignore further damage to break the recursion chain
+	if is_exploding or _is_dying:
+		return
 	hp -= damage_dealt
 	onCrateCrashed.emit()
 	if hp <= 0:

@@ -1,6 +1,5 @@
 extends Area2D
 
-@onready var game_manager: Node = %GameManager
 @onready var audio: AudioStreamPlayer = $AudioStreamPlayer
 var coin_sfx = preload("res://Assets/sound/coin.wav")
 
@@ -13,5 +12,5 @@ func play_sound(sound: AudioStream):
 func _on_body_entered(body):
 	
 	play_sound(coin_sfx)
-	game_manager.add_point(1)
+	GameManager.add_point(1)
 	queue_free()

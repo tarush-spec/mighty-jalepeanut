@@ -50,7 +50,7 @@ radius = 78.0
 height = 156.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6trfd"]
-size = Vector2(258, 165)
+size = Vector2(285, 233)
 
 [node name="bulldozer" type="CharacterBody2D" unique_id=304395471 groups=["Big_Enemy", "CRASH", "Enemy"]]
 collision_layer = 4
@@ -70,7 +70,7 @@ shape = SubResource("CapsuleShape2D_6trfd")
 [node name="red button" type="Area2D" parent="." unique_id=1588626396]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="red button" unique_id=145800054]
-position = Vector2(20, 40.5)
+position = Vector2(33.5, 6.5)
 shape = SubResource("RectangleShape2D_6trfd")
 debug_color = Color(1, 0, 0.050980393, 0.41960785)
 

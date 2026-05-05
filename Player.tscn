@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bchkyxbr1ahkf" path="res://Assets/Jalepeanut/64x64.png" id="1_f50pn"]
 [ext_resource type="Script" uid="uid://c7ltkiftr2ncc" path="res://player1.gd" id="1_kne1u"]
+[ext_resource type="PackedScene" uid="uid://bnxp07pi08lu6" path="res://shockwave.tscn" id="2_7wy67"]
 [ext_resource type="Script" uid="uid://bdfucbthuw5ae" path="res://camera_2d.gd" id="3_kne1u"]
 [ext_resource type="Script" uid="uid://bue5gxakyf7x6" path="res://player_ui.gd" id="4_hp6x6"]
 [ext_resource type="Texture2D" uid="uid://dfcpycc2bxorw" path="res://Assets/Collectibles/heart_red_solo_anim1.png" id="5_yt0h1"]
@@ -31,13 +32,25 @@
 [ext_resource type="Texture2D" uid="uid://capih3nwtjs3s" path="res://Assets/Collectibles/heart_pink_solo_anim3.png" id="23_q26ax"]
 [ext_resource type="Texture2D" uid="uid://cqxy2g2vbmfip" path="res://Assets/Collectibles/heart_pink_solo_anim4.png" id="24_p01ps"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_rv870"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_7wy67"]
 atlas = ExtResource("1_f50pn")
-region = Rect2(96, 192, 96, 96)
+region = Rect2(96, 480, 96, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_efikj"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_q26ax"]
 atlas = ExtResource("1_f50pn")
-region = Rect2(192, 192, 96, 96)
+region = Rect2(192, 480, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p01ps"]
+atlas = ExtResource("1_f50pn")
+region = Rect2(288, 480, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m7dl7"]
+atlas = ExtResource("1_f50pn")
+region = Rect2(384, 480, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_48og4"]
+atlas = ExtResource("1_f50pn")
+region = Rect2(480, 480, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ij6vw"]
 atlas = ExtResource("1_f50pn")
@@ -163,13 +176,22 @@ region = Rect2(768, 96, 96, 96)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_rv870")
+"texture": SubResource("AtlasTexture_7wy67")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_efikj")
+"texture": SubResource("AtlasTexture_q26ax")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p01ps")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m7dl7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_48og4")
 }],
-"loop": false,
-"name": &"duck",
+"loop": true,
+"name": &"ground_pound",
 "speed": 12.0
 }, {
 "frames": [{
@@ -398,13 +420,15 @@ walk_speed = 300.0
 jumpstrength = 280.0
 dash = 650.0
 dash_duration = 0.5
+shockwave_scene = ExtResource("2_7wy67")
 ouch_animtime = 0.1
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=587081863]
 position = Vector2(0, -48)
 sprite_frames = SubResource("SpriteFrames_lhvu3")
-animation = &"slapdash"
+animation = &"ground_pound"
 autoplay = "idle"
+frame_progress = 0.64712316
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1154818691]
 position = Vector2(0, -32)

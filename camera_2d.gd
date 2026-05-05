@@ -17,15 +17,25 @@ var trauma: float = 0.0
 
 @onready var player: CharacterBody2D = $".."
 var _base_offset: Vector2
+var _locked_position: Vector2
+# read from player.camera_follow so it can be toggled per scene from the player Inspector
+var follow_player: bool = true
 
 
 func _ready():
 	_base_offset = offset
 	if player:
-		# fires when player deals damage to enemies/crates
+		follow_player = player.camera_follow
 		player.onDamageDealt.connect(_on_player_dealt_damage)
-		# fires when player's health changes (i.e. takes damage)
 		player.onHealthChange.connect(_on_player_health_change)
+	if not follow_player:
+		# top_level makes the camera use global coordinates,
+		# ignoring the parent (player) transform entirely
+		top_level = true
+		await get_tree().process_frame  # wait one frame so positions are fully resolved
+		# anchor to the player's spawn position so the camera centres on the room entry
+		# rather than drifting to world origin (0,0)
+		_locked_position = player.global_position
 
 
 func _on_player_dealt_damage():
@@ -47,11 +57,19 @@ func _process(delta):
 
 		# sine waves at co-prime frequencies produce smooth, non-repeating motion
 		var t := Time.get_ticks_msec() * 0.001
-		offset = _base_offset + Vector2(
+		var shake_offset := Vector2(
 			max_offset_x * shake * sin(t * 43.0),
 			max_offset_y * shake * sin(t * 29.0)
 		)
 		rotation_degrees = max_rotation_deg * shake * sin(t * 37.0)
+
+		if follow_player:
+			offset = _base_offset + shake_offset
+		else:
+			global_position = _locked_position + shake_offset
 	else:
-		offset = _base_offset
 		rotation_degrees = 0.0
+		if follow_player:
+			offset = _base_offset
+		else:
+			global_position = _locked_position

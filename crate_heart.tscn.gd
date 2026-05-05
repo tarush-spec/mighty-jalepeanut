@@ -5,9 +5,6 @@ extends Node2D
 @export var hp: int = 1
 @export var hp_player: int = 1
 
-# Counting Scores
-@onready var game_manager: Node = %GameManager
-
 # visuals
 @onready var animsprite: AnimatedSprite2D = $AnimatedSprite2D
 
@@ -25,7 +22,7 @@ func destroyed():
 		return
 	_is_dying = true
 	play_sound(music_smash)
-	game_manager.add_point(100)
+	GameManager.add_point(100)
 	# disable ALL collision objects so nothing physically blocks during animation
 	for child in get_children():
 		if child is CollisionObject2D:

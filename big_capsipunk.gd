@@ -2,7 +2,6 @@ extends CharacterBody2D
 
 #visual variables
 @onready var animsprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var game_manager: Node = %GameManager
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 
 #sound variables
@@ -72,7 +71,7 @@ func big_dead_guy():
 	is_crashing = true
 	disable_coll()
 	speed = 30 * speed
-	game_manager.add_point(10000)
+	GameManager.add_point(10000)
 
 # to not damage anymore
 func disable_coll():
@@ -82,7 +81,7 @@ func disable_coll():
 func crash_despawn(crash_time: int):
 	hp_crash -= crash_time
 	if hp_crash <= 0:
-		game_manager.add_point(10000)
+		GameManager.add_point(10000)
 		queue_free()
 
 # to deal damage

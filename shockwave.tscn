@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://bnxp07pi08lu6"]
+
+[ext_resource type="Texture2D" uid="uid://dqg81pr5g07ml" path="res://Assets/Jalepeanut/shockwave.png" id="1_pkgyo"]
+[ext_resource type="Script" uid="uid://bv0b58ubunqqu" path="res://shockwave.gd" id="1_yccnn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yccnn"]
+size = Vector2(40, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yv332"]
+atlas = ExtResource("1_pkgyo")
+region = Rect2(0, 0, 40, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bogt7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yv332")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="shockwave" type="Area2D" unique_id=777367779]
+collision_mask = 7
+script = ExtResource("1_yccnn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2130901835]
+shape = SubResource("RectangleShape2D_yccnn")
+debug_color = Color(0.9797545, 0, 0.38931584, 0.41960785)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1850047187]
+sprite_frames = SubResource("SpriteFrames_bogt7")
+autoplay = "default"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

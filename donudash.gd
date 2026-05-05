@@ -10,9 +10,6 @@ var music_crash: AudioStream = preload("res://Assets/sound/enemy hit.wav")
 @onready var damagehitbox: CollisionShape2D = $Area2D/damagehitbox
 @onready var area_2d: Area2D = $Area2D
 
-#score
-@onready var game_manager: Node = %GameManager
-
 #movement based variables
 @export var direction: int = -1
 @export var SPEED: float = 300.0
@@ -127,7 +124,7 @@ func crash_despawn(crash_time: int):
 	hp_crash -= crash_time
 	if hp_crash <= 0:
 		queue_free()
-		game_manager.add_point(200)
+		GameManager.add_point(200)
 		print("DEAD DONUT")
 
 

@@ -1,7 +1,6 @@
 extends Node2D
 
 # counting scores
-@onready var game_manager: Node = %GameManager
 @export var score_value: int = 200
 
 # health
@@ -33,13 +32,13 @@ func _on_area_2d_body_entered(body):
 	elif body.is_in_group("CRASH"):
 		if body.is_crashing:
 			body.crash_despawn(recoil)
-			game_manager.add_point(score_value/2)
+			GameManager.add_point(score_value/2)
 			take_damage(body.damage)
 
 
 # shhhhhh (death lol)
 func bulldozer():
-	game_manager.add_point(score_value)
+	GameManager.add_point(score_value)
 	queue_free()
 
 # knockback stuff

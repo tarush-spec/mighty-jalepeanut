@@ -3,7 +3,6 @@ extends CharacterBody2D
 #visual and score variables
 @onready var animsprite2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
-@onready var game_manager: Node = %GameManager
 @onready var gun: Node2D = $Gun
 
 
@@ -74,5 +73,5 @@ func crash_despawn(crash_time: int):
 	hp_crash -= crash_time
 	if hp_crash <= 0:
 		queue_free()
-		game_manager.add_point(50)
+		GameManager.add_point(50)
 		print("DEAD ENEMY")

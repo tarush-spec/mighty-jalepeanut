@@ -1,8 +1,6 @@
 extends CharacterBody2D
 
-#score reference
-@onready var game_manager: Node = %GameManager
-var scoreboard: int 
+var scoreboard: int
 var parthboard: int
 
 #visual variables
@@ -12,6 +10,9 @@ var parthboard: int
 @export var hp: int = 3
 @export var hp_max: int = 5
 @export var damage: int = 1
+
+#camera
+@export var camera_follow: bool = true
 
 #mechanics related variables
 @export var walk_speed: float = 250
@@ -32,6 +33,13 @@ var dash_cooldown_timer: float = 0
 var dash_hitpause_timer: float = 0
 #hitbox
 @onready var charge: Area2D = $charge
+
+# ground pound
+@export var pound_speed: float = 900.0
+@export var pound_cooldown: float = 0.8
+@export var shockwave_scene: PackedScene  # assign shockwave.tscn in the Inspector
+var is_ground_pounding: bool = false
+var _pound_cooldown_timer: float = 0.0
 
 #damage related variables
 var is_ouch: bool = false
@@ -58,6 +66,17 @@ signal onHealthChange (hp: int)
 signal onScoreUpdate (scoreboard: int)
 signal onParth (parthboard: int)
 
+func _ready():
+	# restore persistent state from the autoload so score and health carry over between levels
+	hp = GameManager.hp
+	scoreboard = GameManager.points
+	parthboard = GameManager.parth_points
+	# push restored values to the UI immediately
+	onHealthChange.emit(hp)
+	onScoreUpdate.emit(scoreboard)
+	onParth.emit(parthboard)
+
+
 # processes and executes all physics related stuff
 func _physics_process(delta):
 	#handle cooldown timers
@@ -71,7 +90,11 @@ func _physics_process(delta):
 	
 	if Input.is_action_just_pressed("SlapDash") and can_dash():
 		begin_dash()
-	
+
+	if Input.is_action_just_pressed("GroundPound") and not is_on_floor() \
+			and not is_ground_pounding and not is_dashing and _pound_cooldown_timer <= 0:
+		begin_ground_pound()
+
 	# decide the appropriate state
 	if is_dashing:
 		_process_dash(delta)
@@ -90,7 +113,16 @@ func _physics_process(delta):
 		game_reset()
 
 # Normal Movement and Jumping Function
-func _process_walk(delta): 
+func _process_walk(delta):
+	# ground pound in-flight: lock horizontal, keep slamming down; land on contact
+	if is_ground_pounding:
+		if is_on_floor():
+			land_ground_pound()
+		else:
+			velocity.x = 0
+			velocity.y = pound_speed
+		return
+
 	# gravity purposes
 	if not is_on_floor():
 		# this shan't apply when I wanna jump, after jumping sure but when jumping  NOO
@@ -127,6 +159,8 @@ func _update_timers(delta):
 			end_dash()
 	if dash_cooldown_timer > 0:
 		dash_cooldown_timer -= delta
+	if _pound_cooldown_timer > 0:
+		_pound_cooldown_timer -= delta
 	# dash_hitpause_timer is reserved for a future hitpause feature
 	#if dash_hitpause_timer > 0:
 	#	dash_hitpause_timer -= delta
@@ -190,6 +224,9 @@ func _manage_animation():
 	if is_ouch or _iframes_ouch:
 		animsprite.play("ouch")
 	else:
+		if is_ground_pounding:
+			animsprite.play("ground_pound")  # add a "ground_pound" anim to the sprite; falls back to "jump" if missing
+			return
 		if is_dashing:
 			animsprite.play("slapdash")
 		else:
@@ -215,6 +252,8 @@ func take_damage(amount: int):
 	var knockback_strength = 5.0
 	var knockback_dir = sign(velocity.x) if velocity.x != 0 else 1.0
 	velocity.x = -knockback_dir * knockback_strength * walk_speed
+
+	GameManager.save_player_health(hp)
 
 	if hp <= 0:
 		call_deferred("game_over")
@@ -260,8 +299,9 @@ func restore_health(hp_regain: int):
 	hp += hp_regain
 	if hp >= hp_max:
 		hp = hp_max #to prevent overflow
+	GameManager.save_player_health(hp)
 	onHealthChange.emit(hp)
-	print("player hp = ",hp)
+	print("player hp = ", hp)
 
 
 # death
@@ -269,6 +309,7 @@ func game_over():
 	play_sound(ded_sfx)
 	await get_tree().create_timer(3).timeout
 	is_ded = true
+	GameManager.reset()
 	get_tree().reload_current_scene()
 
 
@@ -298,6 +339,33 @@ func play_sound(sound: AudioStream):
 	audio.stream = sound
 	audio.play()
 
+
+
+# ── Ground Pound ─────────────────────────────────────────────────────────────
+
+func begin_ground_pound():
+	is_ground_pounding = true
+	velocity.x = 0
+	velocity.y = pound_speed
+
+func land_ground_pound():
+	is_ground_pounding = false
+	_pound_cooldown_timer = pound_cooldown
+	spawn_shockwaves()
+	var cam = get_viewport().get_camera_2d()
+	if cam and cam.has_method("add_trauma"):
+		cam.add_trauma(0.85)
+
+func spawn_shockwaves():
+	if shockwave_scene == null:
+		push_warning("GroundPound: shockwave_scene is not assigned in the Inspector.")
+		return
+	for dir in [-1, 1]:
+		var wave = shockwave_scene.instantiate()
+		get_parent().add_child(wave)
+		wave.global_position = global_position
+		wave.direction = dir
+		wave.damage = damage
 
 
 # DEBUG

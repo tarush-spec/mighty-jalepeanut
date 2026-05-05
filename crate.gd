@@ -12,7 +12,6 @@ var _visual: Node2D = null
 @export var recoil: int = 20
 
 # Counting Scores
-@onready var game_manager: Node = %GameManager
 @export var score_value: int = 100
 
 # signals
@@ -35,7 +34,7 @@ func destroyed():
 	if _is_dying:
 		return
 	_is_dying = true
-	game_manager.add_point(score_value)
+	GameManager.add_point(score_value)
 	# disable ALL collision objects so nothing physically blocks during animation
 	for child in get_children():
 		if child is CollisionObject2D:
@@ -85,7 +84,7 @@ func _physics_process(_delta):
 				_hit_this_interaction = true
 				if body.has_method("crash_despawn"):
 					body.crash_despawn(recoil)
-				game_manager.add_point(score_value / 2)
+				GameManager.add_point(score_value / 2)
 				take_damage(body.damage)
 	# reset once no active threat is overlapping, allowing a new hit next dash
 	if not any_active:
@@ -103,7 +102,7 @@ func _on_area_2d_body_entered(body):
 		if body.has_method("crash_despawn") and body.is_crashing:
 			_hit_this_interaction = true
 			body.crash_despawn(recoil)
-			game_manager.add_point(score_value / 2)
+			GameManager.add_point(score_value / 2)
 			take_damage(body.damage)
 
 
@@ -115,6 +114,8 @@ func play_sound(sound: AudioStream):
 
 # to take damage
 func take_damage(damage_dealt: int):
+	if _is_dying:
+		return
 	hp -= damage_dealt
 	play_sound(music_smash)
 	onCrateCrashed.emit()

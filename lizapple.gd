@@ -6,7 +6,6 @@ var direction = -1
 var SPEED = 50.0
 
 @export var hp: int = 1
-@onready var game_manager: Node = %GameManager
 
 func _ready():
 	# Move to layer 3 (value 4) so the player can pass through during i-frames.
@@ -19,7 +18,7 @@ func _ready():
 func take_damage(amount: int):
 	hp -= amount
 	if hp <= 0:
-		game_manager.add_point(200)
+		GameManager.add_point(200)
 		queue_free()
 
 #when i fall i shall fall.
