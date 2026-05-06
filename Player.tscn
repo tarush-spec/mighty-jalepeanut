@@ -420,6 +420,7 @@ walk_speed = 300.0
 jumpstrength = 280.0
 dash = 650.0
 dash_duration = 0.5
+super_jump_window = 1.0
 shockwave_scene = ExtResource("2_7wy67")
 ouch_animtime = 0.1
 

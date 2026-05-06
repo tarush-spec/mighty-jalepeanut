@@ -21,6 +21,10 @@ func destroyed():
 	if _is_dying:
 		return
 	_is_dying = true
+	# always restore health regardless of what broke the crate (dash or ground pound)
+	var player = get_tree().get_first_node_in_group("Player")
+	if player and player.has_method("restore_health"):
+		player.restore_health(hp_player)
 	play_sound(music_smash)
 	GameManager.add_point(100)
 	# disable ALL collision objects so nothing physically blocks during animation
@@ -52,8 +56,6 @@ func _play_destroy_anim() -> void:
 
 
 # Polls overlapping bodies every physics frame.
-# Handles the case where the player is already inside the area when dashing starts,
-# which body_entered misses since it only fires on entry transitions.
 func _physics_process(_delta):
 	if _is_dying:
 		return
@@ -63,10 +65,7 @@ func _physics_process(_delta):
 			any_active = true
 			if not _hit_this_interaction:
 				_hit_this_interaction = true
-				if body.is_in_group("Player") and body.has_method("restore_health"):
-					body.restore_health(hp_player)
 				take_damage(body.damage)
-	# reset once no active threat is overlapping, allowing a new hit next dash
 	if not any_active:
 		_hit_this_interaction = false
 
@@ -77,8 +76,6 @@ func _on_area_2d_body_entered(body):
 		return
 	if body.is_in_group("DASH") and body.is_dashing and not _hit_this_interaction:
 		_hit_this_interaction = true
-		if body.is_in_group("Player") and body.has_method("restore_health"):
-			body.restore_health(hp_player)
 		take_damage(body.damage)
 
 
@@ -88,6 +85,8 @@ func play_sound(sound: AudioStream):
 
 
 func take_damage(damage_dealt: int):
+	if _is_dying:
+		return
 	hp -= damage_dealt
 	if hp <= 0:
 		destroyed()

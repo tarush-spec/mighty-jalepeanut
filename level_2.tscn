@@ -1,5 +1,6 @@
 [gd_scene format=4 uid="uid://lkmdu2mh7kip"]
 
+[ext_resource type="Script" uid="uid://d16uukdjdwqfy" path="res://level_2.gd" id="1_15wb7"]
 [ext_resource type="Texture2D" uid="uid://c7aipcuvswpmj" path="res://Assets/Tilemaps/tileset2_laddoo.png" id="1_nmjpi"]
 [ext_resource type="Texture2D" uid="uid://bu0l8g38f5m2n" path="res://Assets/bg/your bg2.png" id="2_1y8me"]
 [ext_resource type="PackedScene" uid="uid://bafjg4f01dclr" path="res://Player.tscn" id="2_xdadj"]
@@ -1007,6 +1008,7 @@ physics_layer_0/collision_layer = 1
 sources/1 = SubResource("TileSetAtlasSource_15wb7")
 
 [node name="level2" type="Node2D" unique_id=892711485]
+script = ExtResource("1_15wb7")
 
 [node name="TileMap" type="TileMap" parent="." unique_id=609405103]
 tile_set = SubResource("TileSet_n7ypv")
@@ -1084,3 +1086,5 @@ position = Vector2(1069, 259)
 
 [node name="sweet_house6" parent="object" unique_id=819822619 instance=ExtResource("8_7dov7")]
 position = Vector2(1174, 260)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=459473038]

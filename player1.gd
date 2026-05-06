@@ -37,9 +37,12 @@ var dash_hitpause_timer: float = 0
 # ground pound
 @export var pound_speed: float = 900.0
 @export var pound_cooldown: float = 0.8
+@export var super_jump_strength: float = 500.0  # boost when jump is timed with the landing
+@export var super_jump_window: float = 0.15     # seconds before landing that counts as "on time"
 @export var shockwave_scene: PackedScene  # assign shockwave.tscn in the Inspector
 var is_ground_pounding: bool = false
 var _pound_cooldown_timer: float = 0.0
+var _pound_jump_buffer: float = 0.0  # counts down; >0 means jump was pressed recently
 
 #damage related variables
 var is_ouch: bool = false
@@ -52,7 +55,10 @@ var _iframes_ouch: bool = false
 #registering movement input
 var move_input: float
 
+var _pause_menu_scene: PackedScene = preload("res://menu.tscn")
+
 #sounds
+var groundpound_sfx = preload("res://Assets/sound/groundpound.wav")
 var take_damage_sfx = preload("res://Assets/sound/Jalepeanut_ouch.wav")
 var dash_sfx = preload("res://Assets/sound/Jalepeanut_damage.wav") # TODO: verify this is the correct audio file for dashing
 var coin_sfx = preload("res://Assets/sound/coin.wav")
@@ -95,6 +101,10 @@ func _physics_process(delta):
 			and not is_ground_pounding and not is_dashing and _pound_cooldown_timer <= 0:
 		begin_ground_pound()
 
+	# store jump intent while ground pounding so landing can check it
+	if is_ground_pounding and Input.is_action_just_pressed("Jump"):
+		_pound_jump_buffer = super_jump_window
+
 	# decide the appropriate state
 	if is_dashing:
 		_process_dash(delta)
@@ -104,13 +114,8 @@ func _physics_process(delta):
 	move_and_slide()
 	
 	
-	#DEBUG
-	
-	if Input.is_action_just_pressed("title screen"):
-		title_screen()
-	
 	if Input.is_action_just_pressed("DEBUG_RESET"):
-		game_reset()
+		_open_pause_menu()
 
 # Normal Movement and Jumping Function
 func _process_walk(delta):
@@ -161,6 +166,8 @@ func _update_timers(delta):
 		dash_cooldown_timer -= delta
 	if _pound_cooldown_timer > 0:
 		_pound_cooldown_timer -= delta
+	if _pound_jump_buffer > 0:
+		_pound_jump_buffer -= delta
 	# dash_hitpause_timer is reserved for a future hitpause feature
 	#if dash_hitpause_timer > 0:
 	#	dash_hitpause_timer -= delta
@@ -347,6 +354,7 @@ func begin_ground_pound():
 	is_ground_pounding = true
 	velocity.x = 0
 	velocity.y = pound_speed
+	play_sound(groundpound_sfx)
 
 func land_ground_pound():
 	is_ground_pounding = false
@@ -355,6 +363,10 @@ func land_ground_pound():
 	var cam = get_viewport().get_camera_2d()
 	if cam and cam.has_method("add_trauma"):
 		cam.add_trauma(0.85)
+	# super jump: triggered if jump was pressed just before landing OR on the exact frame
+	if _pound_jump_buffer > 0 or Input.is_action_just_pressed("Jump"):
+		velocity.y = -super_jump_strength
+		_pound_jump_buffer = 0.0
 
 func spawn_shockwaves():
 	if shockwave_scene == null:
@@ -368,8 +380,11 @@ func spawn_shockwaves():
 		wave.damage = damage
 
 
-# DEBUG
-func game_reset():
-	get_tree().reload_current_scene()
-func title_screen():
-	get_tree().change_scene_to_file("res://title_screen.tscn")
+func _open_pause_menu():
+	var layer = CanvasLayer.new()
+	layer.layer = 10  # render above all game elements
+	layer.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
+	get_tree().root.add_child(layer)
+	var menu = _pause_menu_scene.instantiate()
+	layer.add_child(menu)
+	get_tree().paused = true

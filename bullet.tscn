@@ -29,6 +29,7 @@ animations = [{
 radius = 14.035668
 
 [node name="bullet" type="Area2D" unique_id=1612096617]
+z_index = 8
 script = ExtResource("1_v7oki")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=319484336 groups=["Enemy"]]

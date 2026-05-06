@@ -53,7 +53,11 @@ func _on_body_entered(body: Node2D):
 		return
 	if target.is_in_group("Enemy") or target.is_in_group("Object") or target.is_in_group("Explodable"):
 		_hit_bodies.append(target)
-		target.take_damage(damage)
+		# enemies with take_ground_pound_damage use that so dashes and shockwaves are distinct
+		if target.has_method("take_ground_pound_damage"):
+			target.take_ground_pound_damage(damage)
+		else:
+			target.take_damage(damage)
 
 
 func _on_area_entered(area: Area2D):

@@ -44,7 +44,8 @@ func shoot():
 
 func shoot_target():
 	if target and can_shoot:
-		var target_direction = (target.global_position - global_position).normalized()
+		# horizontal only — purely left or right, no vertical component
+		var target_direction = Vector2(sign(target.global_position.x - global_position.x), 0)
 		
 		var bullet_instance = bullet_scene.instantiate()
 		

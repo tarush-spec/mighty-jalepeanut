@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://8fsplp3180v7"]
 
 [ext_resource type="PackedScene" uid="uid://ckhvprldb1f6o" path="res://gun.tscn" id="1_ctd2i"]
-[ext_resource type="Script" uid="uid://bq5ma5pe3phb3" path="res://capsipunk_with_a_GUN.gd" id="1_nc4n0"]
+[ext_resource type="Script" path="res://capsipunk_with_a_GUN.gd" id="1_nc4n0"]
 [ext_resource type="Texture2D" uid="uid://b1ldblx2q82c2" path="res://Assets/Enemies/capsipunk with spike.png" id="2_k2aed"]
 [ext_resource type="AudioStream" uid="uid://gyl1mydllpki" path="res://Assets/sound/capsikid_voice.wav" id="4_dr31d"]
 
@@ -71,6 +71,7 @@ script = ExtResource("1_nc4n0")
 
 [node name="Gun" parent="." unique_id=264389567 instance=ExtResource("1_ctd2i")]
 position = Vector2(-19, -2)
+fire_rate = 0.5
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1452794634]
 position = Vector2(1, 0)
