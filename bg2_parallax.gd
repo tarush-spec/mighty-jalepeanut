@@ -13,12 +13,12 @@ extends Node2D
 # tile map layer variables
 @onready var sky: TileMapLayer = $sky
 @onready var bg_1: TileMapLayer = $background1
-@onready var bg_2: TileMapLayer = $background2
+#@onready var bg_2: TileMapLayer = $background2
 @onready var bgenv: TileMapLayer = $backgroundenv
 
 # parallax process
 func _process(delta):
 	bg_1.global_position = player.global_position * bg1_parallax
-	bg_2.global_position = player.global_position * bg2_parallax
+	#bg_2.global_position = player.global_position * bg2_parallax
 	bgenv.global_position = player.global_position * bgenv_parallax
 	sky.global_position = player.global_position * sky_parallax

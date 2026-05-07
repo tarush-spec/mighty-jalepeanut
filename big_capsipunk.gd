@@ -24,6 +24,7 @@ var is_crashing: bool = false
 var is_dashing: bool = false  # kept for CRASH group compatibility
 
 var _should_jump: bool = false  # set true when player dashes into us
+var _crash_hit: Array = []       # enemies already damaged during this crash
 
 
 func play_sound(sound: AudioStream):
@@ -58,6 +59,7 @@ func _physics_process(delta):
 
 	if is_crashing:
 		crash_despawn(1)
+		_hurt_nearby_enemies()
 
 
 # called by the player's dash (charge area) — jump away, no HP loss
@@ -84,15 +86,14 @@ func take_ground_pound_damage(amount: int):
 func big_dead_guy():
 	play_sound(music_crash)
 	is_crashing = true
-	disable_coll()
+	# zero the mask so it passes through walls/floor during the crash,
+	# but keep the shape enabled and collision_layer intact so the bulldozer's
+	# Area2D can still detect and hit it
+	set_deferred("collision_mask", 0)
 	area_2d.monitoring = false
 	area_2d.monitorable = false
 	speed = 30 * speed
 	GameManager.add_point(10000)
-
-
-func disable_coll():
-	collision_shape_2d.disabled = true
 
 
 func crash_despawn(crash_time: int):
@@ -100,6 +101,16 @@ func crash_despawn(crash_time: int):
 	if hp_crash <= 0:
 		GameManager.add_point(10000)
 		queue_free()
+
+
+func _hurt_nearby_enemies():
+	for enemy in get_tree().get_nodes_in_group("Enemy"):
+		if enemy == self or enemy in _crash_hit:
+			continue
+		if global_position.distance_to(enemy.global_position) <= 60.0:
+			_crash_hit.append(enemy)
+			if enemy.has_method("take_damage"):
+				enemy.take_damage(damage)
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:

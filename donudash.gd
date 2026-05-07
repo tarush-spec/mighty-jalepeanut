@@ -18,6 +18,7 @@ var music_crash: AudioStream = preload("res://Assets/sound/enemy hit.wav")
 var is_dashing: bool = true
 var is_crashing: bool = false
 var is_colliding: bool = false
+var _crash_hit: Array = []
 
 #health and damage variables
 @export var hp: int = 1
@@ -74,13 +75,23 @@ func _physics_process(delta: float) -> void:
 	switch_side()
 	manage_animations()
 	if is_crashing:
-		crash_despawn(1) #failsafe
-		print(hp_crash)
+		crash_despawn(1)
+		_hurt_nearby_enemies()
 
 
 
 
 
+
+
+func _hurt_nearby_enemies():
+	for enemy in get_tree().get_nodes_in_group("Enemy"):
+		if enemy == self or enemy in _crash_hit:
+			continue
+		if global_position.distance_to(enemy.global_position) <= 50.0:
+			_crash_hit.append(enemy)
+			if enemy.has_method("take_damage"):
+				enemy.take_damage(damage)
 
 
 # damage

@@ -1776,7 +1776,10 @@ position = Vector2(-1433, 408)
 position = Vector2(6405, 62)
 
 [node name="Capsipunk_with_a_GUN6" parent="Enemies" unique_id=981025527 instance=ExtResource("16_dhpj7")]
-position = Vector2(7393, 1011)
+position = Vector2(7375, 1012)
+
+[node name="Capsipunk_with_a_GUN7" parent="Enemies" unique_id=407098598 instance=ExtResource("16_dhpj7")]
+position = Vector2(7805, 1012)
 
 [node name="Capsipunk_with_a_GUN3" parent="Enemies" unique_id=201434785 instance=ExtResource("16_dhpj7")]
 position = Vector2(6576, -131)

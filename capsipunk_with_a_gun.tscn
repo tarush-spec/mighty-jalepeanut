@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://8fsplp3180v7"]
 
 [ext_resource type="PackedScene" uid="uid://ckhvprldb1f6o" path="res://gun.tscn" id="1_ctd2i"]
-[ext_resource type="Script" path="res://capsipunk_with_a_GUN.gd" id="1_nc4n0"]
+[ext_resource type="Script" uid="uid://bm3d0l8n1jvwf" path="res://capsipunk_with_a_GUN.gd" id="1_nc4n0"]
 [ext_resource type="Texture2D" uid="uid://b1ldblx2q82c2" path="res://Assets/Enemies/capsipunk with spike.png" id="2_k2aed"]
 [ext_resource type="AudioStream" uid="uid://gyl1mydllpki" path="res://Assets/sound/capsikid_voice.wav" id="4_dr31d"]
 
@@ -87,3 +87,5 @@ shape = SubResource("RectangleShape2D_mmoie")
 stream = ExtResource("4_dr31d")
 volume_db = 10.0
 pitch_scale = 0.5
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=492670566]

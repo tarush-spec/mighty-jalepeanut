@@ -226,9 +226,9 @@ script = ExtResource("4_d4yq3")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer" unique_id=404250759]
 offset_left = 458.0
-offset_top = 58.0
+offset_top = 111.0
 offset_right = 634.0
-offset_bottom = 98.0
+offset_bottom = 151.0
 metadata/_edit_use_anchors_ = true
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/HBoxContainer" unique_id=990656329]

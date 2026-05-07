@@ -14,6 +14,7 @@ var music_crash: AudioStream = preload("res://Assets/sound/enemy hit.wav")
 var speed: float = 30.0
 var direction: int = -1
 var is_crashing: bool = false
+var _crash_hit: Array = []
 
 #health and damage variables
 @export var hp: int = 1
@@ -49,12 +50,23 @@ func _physics_process(delta: float) -> void:
 
 	if is_crashing:
 		crash_despawn(1)
+		_hurt_nearby_enemies()
 	else:
 		# aim at and shoot the player every frame (gun handles its own cooldown)
 		var player = get_tree().get_first_node_in_group("Player")
 		if player:
 			gun.set_target(player)
 			gun.shoot_target()
+
+
+func _hurt_nearby_enemies():
+	for enemy in get_tree().get_nodes_in_group("Enemy"):
+		if enemy == self or enemy in _crash_hit:
+			continue
+		if global_position.distance_to(enemy.global_position) <= 50.0:
+			_crash_hit.append(enemy)
+			if enemy.has_method("take_damage"):
+				enemy.take_damage(damage)
 
 
 func take_damage(damage_dealt: int):
