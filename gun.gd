@@ -9,6 +9,9 @@ extends Node2D
 var can_shoot : bool = true
 var target : Node2D = null
 
+# animations
+@onready var animsprite: AnimatedSprite2D = $AnimatedSprite2D
+
 # just in case bullet isn't loaded
 func _ready():
 	if bullet_scene == null:
@@ -46,7 +49,7 @@ func shoot_target():
 	if target and can_shoot:
 		# horizontal only — purely left or right, no vertical component
 		var target_direction = Vector2(sign(target.global_position.x - global_position.x), 0)
-		
+		animsprite.play("default")
 		var bullet_instance = bullet_scene.instantiate()
 		
 		get_tree().current_scene.add_child(bullet_instance)

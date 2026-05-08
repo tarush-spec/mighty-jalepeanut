@@ -53,7 +53,7 @@ bullet_scene = ExtResource("2_8iju2")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=420916328]
 sprite_frames = SubResource("SpriteFrames_1q2t8")
-frame_progress = 0.38855886
+frame_progress = 0.89912194
 
 [node name="muzzle_pos" type="Marker2D" parent="." unique_id=798294011]
 gizmo_extents = 0.0

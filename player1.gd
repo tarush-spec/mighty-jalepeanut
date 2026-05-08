@@ -43,6 +43,7 @@ var dash_hitpause_timer: float = 0
 var is_ground_pounding: bool = false
 var _pound_cooldown_timer: float = 0.0
 var _pound_jump_buffer: float = 0.0  # counts down; >0 means jump was pressed recently
+var _knockback_timer: float = 0.0   # movement input suppressed while this is > 0
 
 #damage related variables
 var is_ouch: bool = false
@@ -133,8 +134,11 @@ func _process_walk(delta):
 		# this shan't apply when I wanna jump, after jumping sure but when jumping  NOO
 		velocity.y += gravity * delta
 	
+	# suppress movement input briefly after a knockback so it isn't immediately cancelled
+	if _knockback_timer > 0:
+		_knockback_timer -= delta
 	# movement with momentum
-	if move_input != 0:
+	elif move_input != 0:
 		# to ensure movement isn't snappy
 		velocity.x = lerp(velocity.x, move_input * walk_speed, accel * delta)
 	else:
@@ -266,6 +270,12 @@ func take_damage(amount: int):
 		call_deferred("game_over")
 	else:
 		_start_invincibility()
+
+
+# called by enemies to push the player back; suppresses movement input briefly
+func apply_knockback(push_velocity: float):
+	velocity.x = push_velocity
+	_knockback_timer = 0.18  # ~11 frames — long enough to feel the push
 
 
 # damage flash animation

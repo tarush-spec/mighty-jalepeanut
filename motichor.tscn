@@ -1,0 +1,122 @@
+[gd_scene format=3 uid="uid://co11jseciirha"]
+
+[ext_resource type="Script" uid="uid://c2bmaoqv1ag6d" path="res://charger.gd" id="1_8e7fu"]
+[ext_resource type="Texture2D" uid="uid://c0bgah4nhxhm0" path="res://Assets/Enemies/Motichor.png" id="2_dinq8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8e7fu"]
+atlas = ExtResource("2_dinq8")
+region = Rect2(128, 0, 128, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dinq8"]
+atlas = ExtResource("2_dinq8")
+region = Rect2(256, 0, 128, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5bvt1"]
+atlas = ExtResource("2_dinq8")
+region = Rect2(384, 0, 128, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q8gom"]
+atlas = ExtResource("2_dinq8")
+region = Rect2(512, 0, 128, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lcseo"]
+atlas = ExtResource("2_dinq8")
+region = Rect2(0, 0, 128, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tpgtk"]
+atlas = ExtResource("2_dinq8")
+region = Rect2(128, 0, 128, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yb2o6"]
+atlas = ExtResource("2_dinq8")
+region = Rect2(0, 0, 128, 96)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5bvt1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8e7fu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dinq8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5bvt1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q8gom")
+}],
+"loop": true,
+"name": &"chase",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lcseo")
+}],
+"loop": true,
+"name": &"crash",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tpgtk")
+}],
+"loop": true,
+"name": &"stunned",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yb2o6")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 12.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8e7fu"]
+radius = 18.0
+height = 46.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dinq8"]
+size = Vector2(43, 91)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lcseo"]
+size = Vector2(143, 68)
+
+[node name="Motichor" type="CharacterBody2D" unique_id=1891171663]
+collision_layer = 4
+collision_mask = 7
+script = ExtResource("1_8e7fu")
+chase_speed = 500.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=761380650]
+sprite_frames = SubResource("SpriteFrames_5bvt1")
+animation = &"crash"
+autoplay = "walk"
+frame_progress = 0.10789215
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=545748737 groups=["Enemy", "Explodable"]]
+position = Vector2(-1, 22)
+shape = SubResource("CapsuleShape2D_8e7fu")
+
+[node name="DamageArea" type="Area2D" parent="." unique_id=1345387402]
+collision_layer = 4
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea" unique_id=814636065]
+position = Vector2(-42.5, 0.5)
+shape = SubResource("RectangleShape2D_dinq8")
+debug_color = Color(0.9970978, 0, 0.18277869, 0.41960785)
+
+[node name="EyeZone" type="Area2D" parent="." unique_id=838779057]
+collision_layer = 4
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EyeZone" unique_id=777742450]
+position = Vector2(-294.5, 11)
+shape = SubResource("RectangleShape2D_lcseo")
+debug_color = Color(2.382472e-06, 0.6484762, 0.18947706, 0.41960785)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=725272863]

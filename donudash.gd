@@ -19,6 +19,7 @@ var is_dashing: bool = true
 var is_crashing: bool = false
 var is_colliding: bool = false
 var _crash_hit: Array = []
+var _hitpause_timer: float = 0.0
 
 #health and damage variables
 @export var hp: int = 1
@@ -70,6 +71,13 @@ func manage_animations():
 #now action lmao:
 func _physics_process(delta: float) -> void:
 	add_gravity(delta)
+
+	if _hitpause_timer > 0:
+		_hitpause_timer -= delta
+		velocity.x = -direction * SPEED * 0.6  # recoil away from player
+		move_and_slide()
+		return
+
 	move()
 	move_and_slide()
 	switch_side()
@@ -102,6 +110,10 @@ func _on_area_2d_body_entered(body):
 		if body.is_dashing:
 			return
 		body.take_damage(damage)
+		var push_dir = sign(body.global_position.x - global_position.x)
+		if body.has_method("apply_knockback"):
+			body.apply_knockback(push_dir * 350.0)
+		_hitpause_timer = 0.08
 	elif body.is_in_group("CRASH"):
 		if body.is_crashing:
 			if is_crashing:
@@ -134,9 +146,8 @@ func disable_coll(): # PREVENT DAMAGE ON DEATH
 func crash_despawn(crash_time: int):
 	hp_crash -= crash_time
 	if hp_crash <= 0:
-		queue_free()
 		GameManager.add_point(200)
-		print("DEAD DONUT")
+		queue_free()
 
 
 func _spawn_death_particles():

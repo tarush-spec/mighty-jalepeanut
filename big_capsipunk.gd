@@ -23,8 +23,9 @@ var direction: float = -1
 var is_crashing: bool = false
 var is_dashing: bool = false  # kept for CRASH group compatibility
 
-var _should_jump: bool = false  # set true when player dashes into us
-var _crash_hit: Array = []       # enemies already damaged during this crash
+var _should_jump: bool = false
+var _crash_hit: Array = []
+var _hitpause_timer: float = 0.0
 
 
 func play_sound(sound: AudioStream):
@@ -53,6 +54,13 @@ func switch_side():
 
 func _physics_process(delta):
 	add_gravity(delta)
+
+	if _hitpause_timer > 0:
+		_hitpause_timer -= delta
+		velocity.x = -direction * speed * 0.6  # recoil away from player
+		move_and_slide()
+		return
+
 	move_and_slide()
 	move()
 	switch_side()
@@ -117,6 +125,10 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	if not body.is_in_group("Player"):
 		return
 	if body.is_dashing:
-		_should_jump = true  # also set here in case Area2D fires before the charge callback
+		_should_jump = true
 		return
 	body.take_damage(damage)
+	var push_dir = sign(body.global_position.x - global_position.x)
+	if body.has_method("apply_knockback"):
+		body.apply_knockback(push_dir * 350.0)
+	_hitpause_timer = 0.15
